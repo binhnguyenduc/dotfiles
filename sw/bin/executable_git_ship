@@ -1,0 +1,107 @@
+#!/bin/bash
+
+function revolver_stop() {
+	revolver stop
+	tput cnorm
+}
+
+# Check for --no-verify option
+no_verify=""
+if [ "$1" == "--no-verify" ]; then
+	no_verify="--no-verify"
+	shift
+fi
+
+# Check if the branch is in merging state
+if git status | grep -q 'You have unmerged paths'; then
+	echo "Branch is in merging state. Please resolve conflicts and commit the changes manually."
+	exit 1
+fi
+
+# show the list of modified git files that will be committed
+echo " == Modified files == "
+git status --short --untracked-files=no
+
+# empty line
+echo ""
+
+# list only the untracked files and exclude all tracked files from the list
+echo " == Untracked files == "
+git ls-files --others --exclude-standard
+
+if ! gum confirm "Commit and push these changes?"; then
+	echo "Aborting"
+	exit 1
+fi
+
+# Save the last commit message in a temporary file based on repository
+last_commit_file="/tmp/last_commit_message_$(basename "$(git rev-parse --show-toplevel)")"
+
+# Use the commit message provided in argument, if given
+if [ $# -eq 1 ]; then
+	commit_message=$1
+else
+	# Check if the last commit message file exists and ask the user if they want to repeat the last commit message
+	if [ -f "$last_commit_file" ]; then
+		last_commit_message=$(cat "$last_commit_file")
+		if gum confirm "Repeat the last commit message: \"$last_commit_message\"?"; then
+			commit_message="$last_commit_message"
+		fi
+	fi
+
+	# If the user didn't choose to repeat the last commit message, ask for a new one
+	if [ -z "$commit_message" ]; then
+		type=$(gum choose "fix" "feat" "docs" "style" "refactor" "test" "chore" "revert")
+		commit_message=$(gum input --value "$type: " --placeholder "Commit message")
+	fi
+fi
+
+# Save the current commit message to the temporary file
+echo "$commit_message" >"$last_commit_file"
+
+tput civis
+revolver --style 'dots2' start 'Committing changes...'
+
+# Iteration counter
+i=0
+# Try committing periodically until it works. Time the commit command. Break if it fails instantly
+while true; do
+	# Increment iteration counter
+	i=$((i + 1))
+
+	revolver update "Committing... Try #$i"
+
+	START=$(date +%s)
+	git commit -a -m "$commit_message" $no_verify
+	exit_code=$?
+	END=$(date +%s)
+	DIFF=$((END - START))
+
+	if [ $exit_code -eq 0 ]; then
+		echo "Current iteration took $DIFF seconds"
+		break
+	fi
+
+	echo "Failed attempt took $DIFF seconds"
+	if [ $DIFF -lt 4 ]; then
+		echo "Commit failed instantly, aborting"
+		revolver_stop
+		exit 1
+	fi
+	# break after 3 attempts
+	if [ $i -eq 3 ]; then
+		echo "Commit failed after 3 attempts, aborting"
+		revolver_stop
+		exit 1
+	fi
+
+	echo "Commit failed, retrying"
+done
+
+revolver update "Pulling changes..."
+git pull --rebase -q origin "$(git rev-parse --abbrev-ref HEAD)"
+
+revolver update "Pushing changes..."
+git push -u -q origin "$(git rev-parse --abbrev-ref HEAD)"
+
+revolver_stop
