@@ -73,4 +73,12 @@ ck.md
 
 # Gemini CLI settings (symlink to .claude/.mcp.json)
 .gemini/settings.json
-.claude/settings.bak.json
+
+# Claude Code
+.claude/
+CLAUDE.md
+AGENTS.md
+release-manifest.json
+
+# OpenCode
+.opencode/
