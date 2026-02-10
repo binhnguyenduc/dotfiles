@@ -298,6 +298,7 @@ if [[ $OSTYPE == 'darwin'* ]]; then
 		notion
 		slack
 		discord
+    mattermost
 		stats
 		zoom
     twingate
@@ -358,6 +359,7 @@ else
     com.discordapp.Discord
     us.zoom.Zoom
     com.visualstudio.code
+    com.mattermost.Desktop
   )
 
   installed_flatpaks=($(flatpak list --app --columns=application 2>/dev/null))
