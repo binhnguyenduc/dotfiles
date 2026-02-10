@@ -110,6 +110,12 @@ if [ ${last_system} -gt ${system_seconds} ] || [ $force_update -eq 1 ]; then
 	nvim +PlugUpgrade +PlugClean! +PlugUpdate +PlugInstall +CocUpdateSync +TSUpdateSync +qall
 	update_error nvim $?
 
+  if command -v bun &> /dev/null; then
+    revolver update "Updating bun..."
+    bun upgrade
+    update_error bun $?
+  fi
+
   revolver update "Updating npm packages..."
 	npm update && npm upgrade && npm audit fix --force && npm prune --production --force
 	update_error npm $?

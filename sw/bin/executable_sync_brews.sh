@@ -447,6 +447,12 @@ if [[ $OSTYPE == 'linux'* ]]; then
   go env -w CC=gcc CXX="g++"
 fi
 
+revolver update 'Installing Bun...'
+# bun - fast JS/TS runtime & package manager (official install script)
+if ! command -v bun &> /dev/null; then
+  curl -fsSL https://bun.com/install | bash
+fi
+
 revolver update 'Installing npm packages...'
 # npm stuff
 npm i -q -g repomix
