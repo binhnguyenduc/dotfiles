@@ -348,7 +348,7 @@ zinit id-as='brew-completions' wait as='completion' lucid \
     command rm $ZPFX/brew_comps_zsh/_git; \
     zinit creinstall -q $ZPFX/brew_comps_zsh; \
     zinit cclear; \
-    enable-fzf-tab' \
+    (( $+functions[enable-fzf-tab] )) && enable-fzf-tab' \
   atload='fpath=( ${(u)fpath[@]:#$(brew --prefix)/share/zsh/site-functions/*} ); \
       fpath+=( $ZPFX/brew_comps_others )' \
   atpull='%atclone' nocompile run-atpull for \
@@ -360,7 +360,7 @@ zinit id-as='system-completions' wait as='completion' lucid \
     command cp -f $(brew --prefix)/share/zsh/functions/^_* $ZPFX/zsh_comps; \
     zinit creinstall -q $(brew --prefix)/share/zsh/functions; \
     zinit cclear; \
-    enable-fzf-tab' \
+    (( $+functions[enable-fzf-tab] )) && enable-fzf-tab' \
   atload='fpath=( ${(u)fpath[@]:#$(brew --prefix)/share/zsh/functions/*} ); \
     fpath+=( $ZPFX/zsh_comps )' \
   atpull="%atclone" nocompile run-atpull for \
@@ -370,7 +370,7 @@ zinit id-as='fn-completions' wait as='completion' lucid \
   atclone='print Installing FN completions...; \
     zinit creinstall -q $HOME/.completions; \
     zinit cclear; \
-    enable-fzf-tab' \
+    (( $+functions[enable-fzf-tab] )) && enable-fzf-tab' \
   atload='fpath=( ${(u)fpath[@]:#$HOME/.completions/*} )' \
   atpull="%atclone" nocompile run-atpull for \
        zdharma-continuum/null
