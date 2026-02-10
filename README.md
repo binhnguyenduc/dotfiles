@@ -1,14 +1,41 @@
 # DNSE Dotfiles
 
+<!--toc:start-->
+
+- [DNSE Dotfiles](#dnse-dotfiles)
+  - [Introduction](#introduction)
+  - [Setup](#setup)
+    - [Automatic Setup](#automatic-setup)
+    - [Manual Setup](#manual-setup)
+  - [Git setup](#git-setup)
+    - [Username and local settings](#username-and-local-settings)
+    - [GitHub org cloning script](#github-org-cloning-script)
+    - [Git pull all repos script](#git-pull-all-repos-script)
+  - [Preparing your terminal](#preparing-your-terminal)
+  - [Homebrew](#homebrew)
+  - [Autoupdates](#autoupdates)
+  - [zshrc](#zshrc)
+    - [Features](#features)
+  - [tmux](#tmux)
+    - [Features](#features-1)
+  - [Neovim](#neovim)
+    - [vimrc](#vimrc)
+    - [Discoverability of commands and plugins](#discoverability-of-commands-and-plugins)
+    - [AI-based autocompletion](#ai-based-autocompletion)
+    - [LanguageTool](#languagetool)
+  - [Colors](#colors)
+  - [Managing `*_local` override files](#managing-local-override-files)
+  <!--toc:end-->
+
 ## Introduction
 
-Welcome to DNSE optimized development environment that is well integrated
-with our stack.
+Welcome to DNSE optimized development environment that is well integrated with
+our stack.
 
 ## Setup
 
-We use [chezmoi](https://www.chezmoi.io) to manage DNSE dotfiles in your
-home directory.
+We use [chezmoi](https://www.chezmoi.io) to manage DNSE dotfiles in your home
+directory.
 
 ### Automatic Setup
 
@@ -58,8 +85,8 @@ for GitHub to use HTTP API. Also, it's useful to add this token to your
 
 ### Git pull all repos script
 
-To update all repos in a directory, run: `pull_all.sh $HOME/work`.
-This step is performed automatically on auto-updates.
+To update all repos in a directory, run: `pull_all.sh $HOME/work`. This step is
+performed automatically on auto-updates.
 
 ## Preparing your terminal
 
@@ -204,7 +231,7 @@ Bonus:
 
 - Slack Gruvbox - Paste this in your DM to Slackbot and click the
   `Switch sidebar theme` button.
-  ` gruvbox dark #282828,#3c3836,#ebdbb2,#1d2021,#3e313c,#ebdbb2,#689d6a,#fb4934`
+  `gruvbox dark #282828,#3c3836,#ebdbb2,#1d2021,#3e313c,#ebdbb2,#689d6a,#fb4934`
 
 ## Managing `*_local` override files
 
