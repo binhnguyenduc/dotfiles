@@ -141,6 +141,8 @@ PACKAGES+=(
   grpcurl
   mockery
   urlview
+  ffmpeg
+  imagemagick
   tree-sitter
   tree-sitter-cli
   cmake
@@ -440,6 +442,7 @@ fi
 
 revolver update 'Installing npm packages...'
 # npm stuff
+npm i -q -g repomix
 npm i -q -g turbo
 npm i -q -g bash-language-server
 npm i -q -g dockerfile-language-server-nodejs
