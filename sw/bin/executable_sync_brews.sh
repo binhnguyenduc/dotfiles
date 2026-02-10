@@ -304,6 +304,7 @@ if [[ $OSTYPE == 'darwin'* ]]; then
 		stats
 		zoom
     twingate
+    tailscale
     chatgpt
     visual-studio-code
 		swiftdefaultappsprefpane # for setting several macOS properties such as default app for opening plaintext files
@@ -397,6 +398,12 @@ else
   if ! command -v twingate &> /dev/null; then
     revolver update 'Installing Twingate...'
     curl -fsSL https://binaries.twingate.com/client/linux/install.sh | sudo bash
+  fi
+
+  # Tailscale (via official install script)
+  if ! command -v tailscale &> /dev/null; then
+    revolver update 'Installing Tailscale...'
+    curl -fsSL https://tailscale.com/install.sh | sh
   fi
 fi
 
