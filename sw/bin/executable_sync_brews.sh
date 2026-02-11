@@ -288,7 +288,6 @@ if [[ $OSTYPE == 'darwin'* ]]; then
     font-figtree
 		iterm2
     ghostty
-    claude-code
 		adobe-acrobat-reader
 		docker
     orbstack
@@ -461,8 +460,12 @@ npm i -q -g bash-language-server
 npm i -q -g dockerfile-language-server-nodejs
 npm i -q -g graphql-language-service-cli
 npm i -q -g husky
-if [[ $OSTYPE == 'linux'* ]]; then
-  npm i -q -g @anthropic-ai/claude-code
+revolver update 'Installing/updating Claude Code...'
+# Claude Code - official install/update
+if ! command -v claude &> /dev/null; then
+  curl -fsSL https://claude.ai/install.sh | bash
+else
+  claude update
 fi
 
 revolver update 'Installing python packages...'
